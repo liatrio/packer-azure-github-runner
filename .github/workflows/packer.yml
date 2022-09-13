@@ -2,7 +2,10 @@ name: Packer
 
 on: 
   push:
-    branches: [initial_setup]
+    branches:
+      - main
+    tags: 
+      - 'v[0-9]+.[0-9]+.[0-9]+' # matches vX.X.X versioning
 
 jobs:
   packer:
@@ -12,6 +15,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+      
+      # extract the tag name from the commit ref
+      - name: Set Tag Name
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/v} # Microsoft versioning must be X.X.X
 
       # validate templates
       - name: Validate Template
@@ -33,6 +41,7 @@ jobs:
           target: ubuntu.pkr.hcl
         env:
           PACKER_LOG: 1
+          TAG_NAME: ${{ steps.vars.outputs.tag }}
           AZURE_SUBSCRIPTION_ID: "${{ secrets.AZURE_SIG_SUBSCRIPTION_ID }}"
           AZURE_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
           AZURE_CLIENT_SECRET: "${{ secrets.AZURE_CLIENT_SECRET }}"
