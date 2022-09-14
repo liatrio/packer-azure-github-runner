@@ -20,9 +20,7 @@ variable "sig_name" {}
 
 variable "sig_image_name" {}
 
-variable "sig_image_version" {
-  default = env("TAG_NAME")
-}
+variable "sig_image_version" {}
 
 variable "regions" {}
 
