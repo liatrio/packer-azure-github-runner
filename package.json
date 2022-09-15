@@ -1,0 +1,11 @@
+{
+    "name": "conventional-release",
+    "version": "1.0.0",
+    "private": true,
+    "dependencies": {
+      "@liatrio/semantic-release-helm": "^2.0.0",
+      "@semantic-release/git": "^10.0.1",
+      "conventional-changelog-conventionalcommits": "^4.6.1",
+      "semantic-release": "^18.0.0"
+    }
+  }
