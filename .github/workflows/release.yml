@@ -4,10 +4,11 @@ on:
   push:
     branches:
       - main
+      - semantic-release
     paths:
       - "*.hcl"
       - ".github/workflows/release.yml"
-      - ".releaserc.yaml"
+      - ".releaserc.yml"
   workflow_dispatch: {}
 
 concurrency:
