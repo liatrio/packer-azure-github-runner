@@ -1,0 +1,6 @@
+---
+branches:
+  - main
+repositoryUrl: https://github.com/liatrio/packer-azure-github-runner
+preset: conventionalcommits
+tagFormat: "v${version}"
