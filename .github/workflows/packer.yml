@@ -1,9 +1,13 @@
 name: Packer
 
 on:
-  workflow_run:
-    workflows: [release]
-    types: [completed]
+  push:
+    branches:
+      - main
+    paths:
+      - "*.hcl"
+      - ".github/workflows/release.yml"
+      - ".releaserc.yml"
 
 jobs:
   on-success:
@@ -54,3 +58,20 @@ jobs:
           AZURE_SUBSCRIPTION_ID: "${{ secrets.AZURE_SIG_SUBSCRIPTION_ID }}"
           AZURE_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
           AZURE_CLIENT_SECRET: "${{ secrets.AZURE_CLIENT_SECRET }}"
+
+  release:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.release.outputs.changed }}
+      previousVersion: ${{ steps.release.outputs.previousVersion }}
+      newVersion: ${{ steps.release.outputs.newVersion }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Release
+        id: release
+        uses: liatrio/github-actions/conventional-release@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

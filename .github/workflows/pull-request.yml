@@ -16,5 +16,5 @@ jobs:
         uses: hashicorp/packer-github-actions@85839311bf6d0a1a8e0bd26dfac5311bc9f7d6ad
         with:
           command: validate
-          arguments: "--var-file=variables.pkr.hcl"
+          arguments: "--var-file=ubunutu-vars.pkr"
           target: ubuntu.pkr.hcl
